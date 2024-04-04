@@ -1,23 +1,13 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import ChatClient from "./ChatClient"; // ChatClient 컴포넌트를 import
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <p>Chat Application</p>
       </header>
+      <ChatClient /> {/* ChatClient 컴포넌트를 사용 */}
     </div>
   );
 }
