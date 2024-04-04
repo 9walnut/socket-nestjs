@@ -13,7 +13,7 @@ export class ChatGateway {
   @WebSocketServer()
   server: Server;
 
-  @SubscribeMessage('events')
+  @SubscribeMessage('message')
   onEvent(client: any, data: any): Observable<WsResponse<number>> {
     return from([1, 2, 3]).pipe(
       map((item) => ({ event: 'events', data: item })),
