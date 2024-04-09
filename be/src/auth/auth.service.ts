@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UsersService } from 'src/users/users.service';
 import * as bcrypt from 'bcrypt';
@@ -44,10 +44,27 @@ export class AuthService {
     };
   }
 
-  // async login(loginUserDto: LoginUserDto): Promise<any> {
-  //   const payload = { username: user.username, sub: user.userId };
-  //   return {
-  //     access_token: this.jwtService.sign(payload),
-  //   };
-  // }
+  async login(loginUserDto: LoginUserDto): Promise<{ token: string }> {
+    const user = await this.usersRepository.findOne({
+      where: { userid: loginUserDto.userid },
+    });
+
+    if (!user) {
+      throw new UnauthorizedException('아이디가 존재하지 않습니다');
+    }
+
+    const hashedPassword = await bcrypt.hash(loginUserDto.password, 10);
+    if (hashedPassword !== user.password) {
+      throw new UnauthorizedException('비밀번호가 일치하지 않습니다');
+    }
+
+    const token = this.jwtTokenService.generateToken(
+      user.username,
+      user.userid,
+    );
+
+    return {
+      token: token,
+    };
+  }
 }

@@ -5,18 +5,16 @@ import { LoginUserDto } from 'src/auth/dto/login-user.dto';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private authService: AuthService) {}
+  constructor(private readonly authService: AuthService) {}
 
   @Post('signup')
   async signUp(@Body() createUserDto: CreateUserDto) {
-    const user = await this.authService.signUp(CreateUserDto);
-    return user;
+    return this.authService.signUp(createUserDto);
   }
 
   @HttpCode(HttpStatus.OK)
   @Post('login')
   async login(@Body() loginUserDto: LoginUserDto) {
-    const jwt = await this.authService.login(loginUserDto);
-    return jwt;
+    return this.authService.login(loginUserDto);
   }
 }

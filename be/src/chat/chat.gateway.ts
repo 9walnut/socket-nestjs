@@ -17,11 +17,11 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
 
   private logger = new Logger('ChatGateway');
 
-  @SubscribeMessage('chat') // subscribe to chat event messages
+  @SubscribeMessage('chat')
   handleMessage(@MessageBody() payload: AddMessageDto): AddMessageDto {
     this.logger.log(`Message received: ${payload.author} - ${payload.body}`);
-    this.server.emit('chat', payload); // broadbast a message to all clients
-    return payload; // return the same payload data
+    this.server.emit('chat', payload);
+    return payload;
   }
 
   handleConnection(socket: Socket) {
@@ -31,11 +31,4 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
   handleDisconnect(socket: Socket) {
     this.logger.log(`Socket disconnected: ${socket.id}`);
   }
-
-  // @SubscribeMessage('message')
-  // onEvent(client: any, data: any): Observable<WsResponse<number>> {
-  //   return from([1, 2, 3]).pipe(
-  //     map((item) => ({ event: 'events', data: item })),
-  //   );
-  // }
 }
