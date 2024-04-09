@@ -1,7 +1,7 @@
 import { Controller, Post, Body, Get, UseGuards } from '@nestjs/common';
 import { ChatService } from './chat.service';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
-import { AddMessageDto } from './dto/add-message.dto';
+import { AddChatDto } from './dto/add-chat.dto';
 
 @Controller('chat')
 export class ChatController {
@@ -9,13 +9,13 @@ export class ChatController {
 
   @Post('message')
   @UseGuards(JwtAuthGuard)
-  async addMessage(@Body() addMessageDto: AddMessageDto) {
-    return this.chatService.addMessage(addMessageDto);
+  async addChat(@Body() addChatDto: AddChatDto) {
+    return this.chatService.addChat(addChatDto);
   }
 
   @Get('message')
   @UseGuards(JwtAuthGuard)
-  async getMessage() {
-    return this.chatService.getMessage();
+  async getChat() {
+    return this.chatService.getChat;
   }
 }

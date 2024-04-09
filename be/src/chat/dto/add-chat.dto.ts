@@ -1,4 +1,4 @@
-export class AddMessageDto {
+export class AddChatDto {
   author: string;
   body: string;
 }

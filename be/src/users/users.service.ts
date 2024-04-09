@@ -11,16 +11,16 @@ export class UsersService {
     private usersRepository: Repository<User>,
   ) {}
 
-  async findOne(username: string): Promise<User | undefined> {
-    return this.usersRepository.findOne({ username });
-  }
+  // async findOne(userid: string): Promise<User | undefined> {
+  //   return this.usersRepository.findOne({ userid });
+  // }
 
   async create(createUserDto: {
     username: string;
     password: string;
   }): Promise<User> {
-    const newUser = this.userRepository.create(createUserDto);
-    await this.userRepository.save(newUser);
+    const newUser = this.usersRepository.create(createUserDto);
+    await this.usersRepository.save(newUser);
     return newUser;
   }
 }
