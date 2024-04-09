@@ -4,7 +4,7 @@ import { JwtService } from '@nestjs/jwt';
 @Injectable()
 export class JwtTokenService {
   constructor(private jwtService: JwtService) {
-    console.log('JwtService secret:', this.jwtService['options'].secret);
+    console.log('JwtService secret:', this.jwtService['options']);
   }
 
   generateToken(username: string, userid: string): string {

@@ -20,15 +20,19 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
     }),
     JwtModule.registerAsync({
       imports: [ConfigModule],
-      global: true,
-      useFactory: (configService: ConfigService) => ({
-        secret: configService.get<string>('JWT_SECRET'),
-        signOptions: { expiresIn: '1d' },
-      }),
       inject: [ConfigService],
+      global: true,
+      useFactory: (configService: ConfigService) => {
+        const secret = configService.get('JWT_SECRET');
+        console.log(`JWT Secret: ${secret}`);
+        return {
+          secret: secret,
+          signOptions: { expiresIn: '1d' },
+        };
+      },
     }),
   ],
-  providers: [AuthService, JwtService, JwtTokenService],
+  providers: [AuthService, JwtTokenService],
   controllers: [AuthController],
   exports: [JwtModule, JwtTokenService],
 })
