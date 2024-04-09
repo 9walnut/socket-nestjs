@@ -1,5 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
-import { User } from 'src/users/entities/user.entitiy';
+import { User } from 'src/users/entities/user.entity';
 
 @Entity()
 export class Chat {
@@ -7,7 +7,7 @@ export class Chat {
   id: number;
 
   @ManyToOne(() => User, (user) => user.chats)
-  user: User; // User 엔티티를 참조하는 필드 추가
+  user: User;
 
   @Column()
   body: string;
