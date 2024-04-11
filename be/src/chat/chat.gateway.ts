@@ -11,20 +11,48 @@ import { Logger } from '@nestjs/common';
 import { Server, Socket } from 'socket.io';
 import { AddChatDto } from './dto/add-chat.dto';
 import { JwtService } from '@nestjs/jwt';
+import { ChatService } from './chat.service';
 
 @WebSocketGateway({ cors: { origin: '*' } })
 export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
   @WebSocketServer()
   server: Server;
 
-  constructor(private jwtService: JwtService) {}
+  constructor(
+    private jwtService: JwtService,
+    private chatService: ChatService,
+  ) {}
 
   private logger = new Logger('ChatGateway');
 
+  @SubscribeMessage('joinRoom')
+  async handleJoinRoom(
+    @ConnectedSocket() socket: Socket,
+    @MessageBody() room: string,
+  ) {
+    socket.join(room);
+    this.logger.log(`${socket.data.user.sub} joined room: ${room}`);
+  }
+
+  @SubscribeMessage('leaveRoom')
+  handleLeaveRoom(
+    @ConnectedSocket() socket: Socket,
+    @MessageBody() room: string,
+  ) {
+    socket.leave(room);
+    this.logger.log(`${socket.data.user.sub} left room: ${room}`);
+  }
+
   @SubscribeMessage('chat')
-  handleMessage(@MessageBody() payload: AddChatDto): void {
-    this.logger.log(`Message received: ${payload.author} - ${payload.body}`);
-    this.server.emit('chat', payload);
+  async handleMessage(
+    @ConnectedSocket() socket: Socket,
+    @MessageBody() payload: AddChatDto,
+  ): Promise<void> {
+    const message = await this.chatService.addChat(payload);
+    this.server.to(payload.room).emit('chat', message);
+    this.logger.log(
+      `Message in room ${payload.room}: ${payload.author} - ${payload.body}`,
+    );
   }
 
   handleConnection(@ConnectedSocket() socket: Socket) {

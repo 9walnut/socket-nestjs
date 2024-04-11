@@ -14,4 +14,7 @@ export class Chat {
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   timestamp: Date;
+
+  @Column()
+  room: string;
 }
