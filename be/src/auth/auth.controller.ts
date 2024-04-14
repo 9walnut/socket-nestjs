@@ -19,6 +19,10 @@ export class AuthController {
 
   @HttpCode(HttpStatus.OK)
   @Post('login')
+  @ApiBody({ type: LoginUserDto })
+  @ApiOperation({ summary: '로그인' })
+  @ApiResponse({ status: 201, description: '로그인 성공' })
+  @ApiResponse({ status: 403, description: 'Forbidden' })
   async login(@Body() loginUserDto: LoginUserDto) {
     return this.authService.login(loginUserDto);
   }

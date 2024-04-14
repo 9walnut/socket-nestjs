@@ -2,6 +2,9 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import * as path from 'path';
+import { User } from 'src/users/entities/user.entity';
+import { Chat } from 'src/chat/entities/chat.entity';
+import { ChatRoom } from 'src/chat/entities/chatroom.entity';
 
 @Module({
   imports: [
@@ -24,8 +27,7 @@ import * as path from 'path';
           username: configService.get<string>('DB_USERNAME'),
           password: configService.get<string>('DB_PASSWORD'),
           database: configService.get<string>('DB_DATABASE'),
-          entities: [__dirname + '/../../**/*.entity.js'],
-          synchronize: true,
+          entities: [User, Chat, ChatRoom],
         };
       },
       inject: [ConfigService],
