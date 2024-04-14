@@ -11,7 +11,7 @@ import { Chat } from './chat.entity';
 @Entity()
 export class ChatRoom {
   @PrimaryGeneratedColumn()
-  roomid: number;
+  roomId: number;
 
   @Column()
   roomname: string;

@@ -10,8 +10,9 @@ const dataSourceOptions: DataSourceOptions = {
   username: `${process.env.DB_USERNAME}`,
   password: `${process.env.DB_PASSWORD}`,
   database: `${process.env.DB_DATABASE}`,
-  entities: ['src/**/*.entity.ts'],
-  // migrations: ['migrations/*.ts'],
+  entities: [__dirname + '/src/**/*.entity.ts'],
+  migrations: ['migration/*.ts'],
+
   synchronize: true,
 };
 const dataSource = new DataSource(dataSourceOptions);

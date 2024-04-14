@@ -5,7 +5,7 @@ import { Repository } from 'typeorm';
 import { AddChatDto } from './dto/add-chat.dto';
 import { ChatRoom } from './entities/chatroom.entity';
 import { User } from 'src/users/entities/user.entity';
-import { createChatRoomDto } from './dto/create-chat-room.dto';
+import { CreateChatRoomDto } from './dto/create-chat-room.dto';
 
 @Injectable()
 export class ChatService {
@@ -19,7 +19,7 @@ export class ChatService {
   ) {}
 
   async createChatRoom(
-    createChatRoomDto: createChatRoomDto,
+    createChatRoomDto: CreateChatRoomDto,
   ): Promise<ChatRoom> {
     const chatRoom = this.chatRoomRepository.create({
       roomname: createChatRoomDto.roomname,

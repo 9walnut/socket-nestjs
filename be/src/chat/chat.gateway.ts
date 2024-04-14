@@ -49,10 +49,8 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
     @MessageBody() payload: AddChatDto,
   ): Promise<void> {
     const message = await this.chatService.addChat(payload);
-    this.server.to(payload.room).emit('chat', message);
-    this.logger.log(
-      `Message in room ${payload.room}: ${payload.author} - ${payload.body}`,
-    );
+    this.server.to(payload.roomId.toString()).emit('chat', message);
+    this.logger.log(`Message in room ${payload.roomId}:  - ${payload.message}`);
   }
 
   handleConnection(@ConnectedSocket() socket: Socket) {
