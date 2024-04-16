@@ -6,10 +6,11 @@ import { CreateChatRoomDto } from './dto/create-chat-room.dto';
 import { ApiBody, ApiOperation, ApiResponse } from '@nestjs/swagger';
 
 @Controller('chat')
+@UseGuards(JwtAuthGuard)
 export class ChatController {
   constructor(private readonly chatService: ChatService) {}
 
-  @Post()
+  @Post('create')
   @ApiBody({ type: CreateChatRoomDto })
   @ApiOperation({ summary: '채팅방 만들기' })
   @ApiResponse({ status: 201, description: '채팅방 만들기 성공' })
@@ -23,7 +24,6 @@ export class ChatController {
   @ApiOperation({ summary: '메시지 전송' })
   @ApiResponse({ status: 201, description: '메시지 전송 성공' })
   @ApiResponse({ status: 403, description: 'Forbidden' })
-  @UseGuards(JwtAuthGuard)
   async addChat(@Body() addChatDto: AddChatDto) {
     return this.chatService.addChat(addChatDto);
   }

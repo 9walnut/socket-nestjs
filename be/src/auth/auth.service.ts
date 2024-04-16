@@ -53,8 +53,12 @@ export class AuthService {
       throw new UnauthorizedException('아이디가 존재하지 않습니다');
     }
 
-    const hashedPassword = await bcrypt.hash(loginUserDto.password, 10);
-    if (hashedPassword !== user.password) {
+    const passwordMatch = await bcrypt.compare(
+      loginUserDto.password,
+      user.password,
+    );
+
+    if (!passwordMatch) {
       throw new UnauthorizedException('비밀번호가 일치하지 않습니다');
     }
 
