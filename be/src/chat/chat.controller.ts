@@ -3,10 +3,16 @@ import { ChatService } from './chat.service';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { AddChatDto } from './dto/add-chat.dto';
 import { CreateChatRoomDto } from './dto/create-chat-room.dto';
-import { ApiBody, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiBody,
+  ApiOperation,
+  ApiResponse,
+} from '@nestjs/swagger';
 
 @Controller('chat')
 @UseGuards(JwtAuthGuard)
+@ApiBearerAuth()
 export class ChatController {
   constructor(private readonly chatService: ChatService) {}
 
