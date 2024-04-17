@@ -5,6 +5,7 @@ import * as path from 'path';
 import { User } from 'src/users/entities/user.entity';
 import { Chat } from 'src/chat/entities/chat.entity';
 import { ChatRoom } from 'src/chat/entities/chatroom.entity';
+import { createDataSource } from 'data-source';
 
 @Module({
   imports: [
@@ -33,6 +34,12 @@ import { ChatRoom } from 'src/chat/entities/chatroom.entity';
       inject: [ConfigService],
     }),
   ],
-  exports: [TypeOrmModule],
+  providers: [
+    {
+      provide: 'DATABASE_CONNECTION', // 데이터베이스 연결을 식별하는 고유한 토큰
+      useFactory: async () => await createDataSource(), // createDataSource 함수를 사용하여 데이터베이스 연결을 생성합니다.
+    },
+  ],
+  exports: [TypeOrmModule, 'DATABASE_CONNECTION'],
 })
 export class DatabaseModule {}
