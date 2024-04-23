@@ -28,6 +28,10 @@ export class ChatService {
     return this.chatRoomRepository.save(chatRoom);
   }
 
+  async getAllRooms(): Promise<ChatRoom[]> {
+    return this.chatRoomRepository.find();
+  }
+
   async addChat(addChatDto: AddChatDto): Promise<Chat> {
     const newChat = this.chatRepository.create({
       message: addChatDto.message,

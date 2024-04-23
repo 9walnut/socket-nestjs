@@ -39,13 +39,33 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
     return { room };
   }
 
+  @SubscribeMessage('requestRooms')
+  async handleRequestRooms(@ConnectedSocket() socket: Socket): Promise<void> {
+    const rooms = await this.chatService.getAllRooms();
+    socket.emit('listRooms', rooms);
+  }
+
+  @SubscribeMessage('setNickname')
+  handleSetNickname(
+    @ConnectedSocket() socket: Socket,
+    @MessageBody() data: { nickname: string },
+  ): void {
+    socket.data.user.nickname = data.nickname;
+    this.logger.log(`Nickname set for ${socket.id}: ${data.nickname}`);
+  }
+
   @SubscribeMessage('joinRoom')
   async handleJoinRoom(
     @ConnectedSocket() socket: Socket,
-    @MessageBody() room: string,
+    @MessageBody() data: { room: string; nickname: string },
   ) {
-    socket.join(room);
-    this.logger.log(`${socket.data.user.sub} joined room: ${room}`);
+    if (!data.nickname) {
+      socket.emit('error', 'Nickname is required');
+      return;
+    }
+    socket.data.user.nickname = data.nickname;
+    socket.join(data.room);
+    this.logger.log(`${data.nickname} joined room: ${data.room}`);
   }
 
   @SubscribeMessage('leaveRoom')
