@@ -12,6 +12,8 @@ import { Server, Socket } from 'socket.io';
 import { AddChatDto } from './dto/add-chat.dto';
 import { JwtService } from '@nestjs/jwt';
 import { ChatService } from './chat.service';
+import { CreateChatRoomDto } from './dto/create-chat-room.dto';
+import { ChatRoom } from './entities/chatroom.entity';
 
 @WebSocketGateway({ cors: { origin: '*' } })
 export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
@@ -24,6 +26,18 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
   ) {}
 
   private logger = new Logger('ChatGateway');
+
+  @SubscribeMessage('createRoom')
+  async handleCreateRoom(
+    @ConnectedSocket() socket: Socket,
+    @MessageBody() createChatRoomDto: CreateChatRoomDto,
+  ): Promise<{ room: ChatRoom }> {
+    const room = await this.chatService.createChatRoom(createChatRoomDto);
+    this.logger.log(
+      `New chat room created: ${room.roomname} with ID: ${room.roomId}`,
+    );
+    return { room };
+  }
 
   @SubscribeMessage('joinRoom')
   async handleJoinRoom(
