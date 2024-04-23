@@ -1,36 +1,16 @@
-// import { ConfigService } from '@nestjs/config';
-// import { DataSource } from 'typeorm';
-
-// export const createDataSource = async (): Promise<DataSource> => {
-//   const configService = new ConfigService();
-
-//   const dataSource = new DataSource({
-//     type: 'mysql',
-//     host: configService.get('DB_HOST'),
-//     port: configService.get<number>('DB_PORT'),
-//     username: configService.get('DB_USERNAME'),
-//     password: configService.get('DB_PASSWORD'),
-//     database: configService.get('DB_DATABASE'),
-//     synchronize: false,
-//     entities: ['src/**/*.entity.ts'],
-//     migrations: ['src/database/migrations/*.ts'],
-//     migrationsTableName: 'migrations',
-//   });
-
-//   return dataSource;
-// };
-
-// export const dataSourceInstance = createDataSource();
+import { ConfigService } from '@nestjs/config';
 import { DataSource } from 'typeorm';
+
+const configService = new ConfigService();
 
 export const AppDataSource = new DataSource({
   type: 'mysql',
-  host: 'localhost',
-  port: 3306,
-  username: 'root',
-  password: '1q2w3e4r!',
-  database: 'socket',
-  synchronize: false,
+  host: configService.get<string>('DB_HOST', 'localhost'),
+  port: configService.get<number>('DB_PORT', 3306),
+  username: configService.get<string>('DB_USERNAME', 'root'),
+  password: configService.get<string>('DB_PASSWORD', '1q2w3e4r!'),
+  database: configService.get<string>('DATABASE', 'socket'),
+  synchronize: configService.get<boolean>('DATABASE_SYNCHRONIZE', false),
   entities: ['src/**/**/*.entity.ts'],
   migrations: ['src/database/migrations/*.ts'],
   migrationsTableName: 'migrations',
