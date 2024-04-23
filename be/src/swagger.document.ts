@@ -1,4 +1,4 @@
-import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { DocumentBuilder } from '@nestjs/swagger';
 
 export class BaseAPIDocument {
   public builder = new DocumentBuilder();
@@ -8,7 +8,6 @@ export class BaseAPIDocument {
       .setTitle('Swagger Socket')
       .setDescription('Socket Project Swagger API')
       .setVersion('1.0.0')
-      .addBearerAuth()
       .addTag('swagger')
       .build();
   }

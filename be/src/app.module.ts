@@ -4,6 +4,12 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { User } from 'src/users/entities/user.entity';
 import { Chat } from 'src/chat/entities/chat.entity';
 import { ChatRoom } from 'src/chat/entities/chatroom.entity';
+import { AuthService } from './auth/auth.service';
+import { AuthModule } from './auth/auth.module';
+import { UsersModule } from './users/users.module';
+import { ChatModule } from './chat/chat.module';
+import { UsersService } from './users/users.service';
+import { ChatService } from './chat/chat.service';
 
 @Module({
   imports: [
@@ -29,8 +35,11 @@ import { ChatRoom } from 'src/chat/entities/chatroom.entity';
         migrationsTableName: 'migrations',
       }),
     }),
+    AuthModule,
+    UsersModule,
+    ChatModule,
   ],
-  providers: [],
+  providers: [AuthService],
   exports: [TypeOrmModule],
 })
-export class DatabaseModule {}
+export class AppModule {}
