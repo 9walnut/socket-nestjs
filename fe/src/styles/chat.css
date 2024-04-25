@@ -1,0 +1,156 @@
+.my-input::placeholder {
+  color: rgba(242, 232, 232, 0.795) !important;
+}
+
+select.custom-select {
+  width: 105px;
+  height: 35px;
+  border: none;
+  border-radius: 5px;
+}
+
+button.custom-btn {
+  width: 105px;
+  height: 40px;
+}
+
+body {
+  background: #e5ddd5;
+}
+
+.page-header {
+  background: #1e2833;
+  margin: 0;
+  padding: 20px 0 10px;
+  color: #ffffff;
+  position: fixed;
+  width: 100%;
+  z-index: 1;
+}
+.main {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding-top: 80px;
+  background-image: url("../../public/img/star-sky.jpg");
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: auto;
+}
+
+.user-log {
+  height: 500px;
+  border: 1px solid white;
+  background-color: #1e2833;
+  margin-bottom: 10px;
+  overflow-y: auto;
+  overflow: auto;
+  border-radius: 5px;
+}
+
+.chat-log {
+  height: 500px;
+  border: 1px solid #e0e0e0;
+  background-color: #1e2833;
+  margin-bottom: 10px;
+  overflow-y: auto;
+  border-radius: 5px;
+  width: 100%;
+}
+.chat-log__item {
+  color: white;
+  background: #fafafa;
+  padding: 10px;
+  margin: 0 auto 20px;
+  max-width: 80%;
+  float: left;
+  border-radius: 4px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  clear: both;
+}
+
+.chat-log__item.chat-log__item--own {
+  float: right;
+  background: #dcf8c6;
+  text-align: right;
+}
+
+.chat-form {
+  background: #dddddd;
+  padding: 15px 0;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+.chat-log__author {
+  margin: 0 auto 0.5em;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.list {
+  margin-top: 4px;
+}
+
+.list .content {
+  display: inline-block;
+  padding: 2px 10px;
+}
+
+.list.notice {
+  text-align: center;
+  font-weight: 900;
+  color: white;
+}
+
+.list.my-chat {
+  text-align: right;
+}
+
+.list.my-chat .content {
+  background-color: RGB(2, 117, 216);
+  color: white;
+  margin-right: 20px;
+  font-weight: 900;
+  border-radius: 5px;
+}
+
+.list.other-chat {
+  text-align: left;
+}
+
+.list.other-chat .content {
+  background-color: RGB(2, 117, 216);
+  color: white;
+  margin-left: 20px;
+  font-weight: 900;
+  border-radius: 5px;
+}
+
+@media screen and (max-width: 800px) {
+  .list.my-chat .content,
+  .list.other-chat .content {
+    margin-right: 5px;
+    margin-left: 5px;
+  }
+}
+
+.user_info {
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-left: 15px;
+}
+.user_info span {
+  font-size: 20px;
+  color: black;
+}
+.user_info p {
+  font-size: 10px;
+  color: black(255, 255, 255, 0.6);
+}
