@@ -3,6 +3,7 @@ import io from "socket.io-client";
 import ConnectionForm from "../components/ConnectionForm";
 import { MessageList } from "./MessageList";
 import { RoomList } from "./RoomList";
+import { MessageForm } from "./MessageForm";
 
 const SERVER_URL = "http://localhost:8000";
 
