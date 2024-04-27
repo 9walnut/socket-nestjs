@@ -1,0 +1,14 @@
+/* ConnectionForm.css */
+.connection-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px;
+}
+
+.connection-form input,
+.connection-form button {
+  margin: 5px;
+  padding: 10px;
+  font-size: 16px;
+}
