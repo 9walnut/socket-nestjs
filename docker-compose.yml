@@ -6,21 +6,26 @@ services:
       - db-data:/var/lib/mysql
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: example
-      MYSQL_DATABASE: myapp
-      MYSQL_USER: user
-      MYSQL_PASSWORD: password
-    ports: -"3306:3306"
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    ports:
+      - "3308:3306"
+
   be:
     build: ./be
-    ports: -"8080:8080"
+    ports:
+      - "8080:8080"
     depends_on:
       - db
     environment:
-      DATABASE_HOST: db
-      DATABASE_USER: user
-      DATABASE_PASSWORD: password
-      DATABASE_NAME: myapp
+      DATABASE_HOST: ${DATABASE_HOST}
+      DATABASE_USER: ${DATABASE_USER}
+      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
+      DATABASE_NAME: ${DATABASE_NAME}
+      DB_PORT: ${DB_PORT}
+
   fe:
     build: ./fe
     ports:
