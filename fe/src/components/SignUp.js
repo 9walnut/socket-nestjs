@@ -1,28 +1,30 @@
-// src/components/Login.js
 import React, { useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
-import SignUp from "./SignUp";
 
-const Login = () => {
-  const [showSignup, setShowSignup] = useState(false);
+const SignUp = ({ onSignIn }) => {
+  const [usernickname, setUsernickname] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const { login } = useAuth();
+  const { signup } = useAuth();
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    login(username, password);
+    signup(usernickname, username, password);
   };
 
-  if (showSignup) {
-    return <SignUp onSignIn={() => setShowSignup(false)} />;
-  }
-
   return (
-    <div className="login">
-      <h4>Login</h4>
+    <div className="signup">
+      <h4>Sign Up</h4>
       <form onSubmit={handleSubmit}>
-        <div className="text_area">
+        <div>
+          <input
+            type="text"
+            value={usernickname}
+            onChange={(e) => setUsernickname(e.target.value)}
+            placeholder="UserNickname"
+          />
+        </div>
+        <div>
           <input
             type="text"
             value={username}
@@ -30,7 +32,8 @@ const Login = () => {
             placeholder="Username"
           />
         </div>
-        <div className="text_area">
+
+        <div>
           <input
             type="password"
             value={password}
@@ -38,13 +41,11 @@ const Login = () => {
             placeholder="Password"
           />
         </div>
-        <button type="submit">Login</button>
-        <button type="button" onClick={() => setShowSignup(true)}>
-          Need an account? Sign Up
+        <button type="submit">Sign Up</button>
+        <button type="button" onClick={onSignIn}>
+          Already have an account? Sign In
         </button>
       </form>
     </div>
   );
 };
-
-export default Login;
