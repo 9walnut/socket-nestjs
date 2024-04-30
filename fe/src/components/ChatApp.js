@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import io from "socket.io-client";
-import ConnectionForm from "../components/ConnectionForm";
+import { ConnectionForm } from "../components/ConnectionForm";
 import { MessageList } from "./MessageList";
 import { RoomList } from "./RoomList";
 import { MessageForm } from "./MessageForm";
@@ -36,9 +36,13 @@ function ChatApp() {
   }, [socket]);
 
   const connectSocket = () => {
+    if (!nickname.trim()) {
+      alert("Please enter a nickname before connecting.");
+      return;
+    }
     if (!socket) return;
     socket.auth = { token: "your_jwt_token" };
-    socket.connect();
+    socket.connect(); // 소켓 연결 시도
     socket.emit("requestRooms");
   };
 
@@ -51,24 +55,31 @@ function ChatApp() {
 
   return (
     <div>
-      <ConnectionForm
-        connectSocket={connectSocket}
-        setNickname={setNickname}
-        nickname={nickname}
-      />
-      <RoomList
-        rooms={rooms}
-        setRoom={setRoom}
-        createRoom={createRoom}
-        joinRoom={joinRoom}
-        room={room}
-      />
-      <MessageList messages={messages} />
-      <MessageForm
-        sendMessage={sendMessage}
-        setMessage={setMessage}
-        message={message}
-      />
+      {!nickname && (
+        <ConnectionForm
+          connectSocket={connectSocket}
+          setNickname={setNickname}
+          nickname={nickname}
+        />
+      )}
+
+      {nickname && (
+        <>
+          <RoomList
+            rooms={rooms}
+            setRoom={setRoom}
+            createRoom={createRoom}
+            joinRoom={joinRoom}
+            room={room}
+          />
+          <MessageList messages={messages} />
+          <MessageForm
+            sendMessage={sendMessage}
+            setMessage={setMessage}
+            message={message}
+          />
+        </>
+      )}
     </div>
   );
 }

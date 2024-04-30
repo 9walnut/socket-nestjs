@@ -9,7 +9,7 @@ export function ConnectionForm({ connectSocket, setNickname, nickname }) {
         value={nickname}
         onChange={(e) => setNickname(e.target.value)}
       />
-      <button onClick={connectSocket}>Connect</button>
+      <button onClick={() => nickname && connectSocket()}>Connect</button>
     </div>
   );
 }
