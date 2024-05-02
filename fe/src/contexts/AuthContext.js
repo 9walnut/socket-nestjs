@@ -9,10 +9,10 @@ export const useAuth = () => useContext(AuthContext);
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
-  const login = async (username, password) => {
+  const login = async (userid, password) => {
     try {
-      const token = await authService.loginToServer(username, password);
-      setUser({ username, token });
+      const token = await authService.loginToServer(userid, password);
+      setUser({ userid, token });
     } catch (error) {
       console.error("Login failed: ", error);
     }

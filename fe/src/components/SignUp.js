@@ -2,14 +2,14 @@ import React, { useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 
 const SignUp = ({ onSignIn }) => {
-  const [usernickname, setUsernickname] = useState("");
+  const [userid, setUserId] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const { signup } = useAuth();
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    signup(usernickname, username, password);
+    signup(userid, username, password);
   };
 
   return (
@@ -19,17 +19,17 @@ const SignUp = ({ onSignIn }) => {
         <div>
           <input
             type="text"
-            value={usernickname}
-            onChange={(e) => setUsernickname(e.target.value)}
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
             placeholder="UserNickname"
           />
         </div>
         <div>
           <input
             type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            placeholder="Username"
+            value={userid}
+            onChange={(e) => setUserId(e.target.value)}
+            placeholder="userid"
           />
         </div>
 
@@ -49,3 +49,5 @@ const SignUp = ({ onSignIn }) => {
     </div>
   );
 };
+
+export default SignUp;

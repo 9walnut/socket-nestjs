@@ -1,13 +1,13 @@
-const API_URL = "http://localhost:8080/login";
+const API_URL = "http://localhost:8080/auth/login";
 
-export async function loginToServer(username, password) {
+export async function loginToServer(userid, password) {
   try {
     const response = await fetch(API_URL, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ username, password }),
+      body: JSON.stringify({ userid, password }),
     });
 
     if (!response.ok) {
@@ -15,7 +15,7 @@ export async function loginToServer(username, password) {
     }
 
     const { token } = await response.json();
-    localStorage.setItem("jwt", token); // 토큰 저장
+    localStorage.setItem("jwt", token);
     return token;
   } catch (error) {
     console.error("Login Error:", error);

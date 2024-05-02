@@ -40,7 +40,7 @@ const Login = () => {
         </div>
         <button type="submit">Login</button>
         <button type="button" onClick={() => setShowSignup(true)}>
-          Need an account? Sign Up
+          Sign Up
         </button>
       </form>
     </div>
