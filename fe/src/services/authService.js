@@ -22,3 +22,19 @@ export async function loginToServer(userid, password) {
     throw error;
   }
 }
+
+export const signup = async (userid, username, password) => {
+  const response = await fetch("http://localhost:8080/auth/signup", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ userid, username, password }),
+  });
+
+  if (!response.ok) {
+    throw new Error("Signup failed");
+  }
+
+  return await response.json();
+};

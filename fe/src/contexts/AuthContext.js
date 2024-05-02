@@ -18,13 +18,22 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const signup = async (userid, username, password) => {
+    try {
+      const user = await authService.signup(userid, username, password);
+      setUser(user);
+    } catch (error) {
+      console.error("Signup failed: ", error);
+    }
+  };
+
   const logout = () => {
     localStorage.removeItem("jwt");
     setUser(null);
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ user, login, logout, signup }}>
       {children}
     </AuthContext.Provider>
   );
