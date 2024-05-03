@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
+import "../styles/css/SignUp.css";
 
 const SignUp = ({ onSignIn }) => {
   const [userid, setUserId] = useState("");
